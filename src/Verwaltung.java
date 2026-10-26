@@ -1,4 +1,5 @@
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,21 +20,13 @@ public class Verwaltung {
         return mitarbeiterListe;
     }
 
-    // mitarbeiterListe weiterleiten an Speicher
-    public void speichern(){
-        try{
-            speicher.speichern(mitarbeiterListe);
-        } catch (IOException e){
-            System.out.println("IOException Error occurred: " + e.getMessage());
-        }
-    }
-
     // mitarbeiterListe laden aus Speicher
     public void laden(){
         try{
-            mitarbeiterListe = speicher.laden();
-        } catch (IOException e){
-            System.out.println("IOException Error occurred: " + e.getMessage());
+            mitarbeiterListe.clear();
+            mitarbeiterListe.addAll(speicher.laden());
+        } catch (SQLException e){
+            System.out.println("SQLException Error occurred: " + e.getMessage());
         }
     }
 
@@ -59,9 +52,15 @@ public class Verwaltung {
 
 
     // Mitarbeiter hinzufügen
-    public void addMitarbeiter(Mitarbeiter mitarbeiter){
-        mitarbeiterListe.add(mitarbeiter);
-        speichern();
+    public boolean addMitarbeiter(Mitarbeiter mitarbeiter){
+        try{
+            speicher.einfuegen(mitarbeiter);
+            laden();
+            return true;
+        } catch (SQLException e){
+            System.out.println("SQLException Error occurred: " + e.getMessage());
+            return false;
+        }
     }
 
     // Mitarbeiter suchen
@@ -82,32 +81,47 @@ public class Verwaltung {
 
     // Mitarbeiter entfernen
     public boolean deleteMitarbeiter(String id){
-        Mitarbeiter gefunden = searchMitarbeiter(id);
-        if (gefunden == null) {
+        Mitarbeiter mitarbeiter = searchMitarbeiter(id);
+        if (mitarbeiter == null) {
             return false;
         }
-        mitarbeiterListe.remove(gefunden);
-        speichern();
-        return true;
+
+        try{
+            speicher.loeschen(mitarbeiter);
+            mitarbeiterListe.remove(mitarbeiter);
+            return true;
+        } catch (SQLException e){
+            System.out.println("SQLException Error occurred: " + e.getMessage());
+            return false;
+        }
+
+
     }
 
     // Mitarbeiterdaten anpassen
     public boolean changeMitarbeiter(String id, int index, String aenderung){
         Mitarbeiter m = searchMitarbeiter(id);
         if(m == null) return false;
-        switch(index){
-            case 1 -> m.setNachname(aenderung);
-            case 2 -> m.setVorname(aenderung);
-            case 3 -> m.setAdresse(aenderung);
-            case 4 -> m.setHausnummer(aenderung);
-            case 5 -> m.setPlz(aenderung);
-            case 6 -> m.setWohnort(aenderung);
-            case 7 -> m.setTelefon(aenderung);
-            case 8 -> m.setGeburtsdatum(aenderung);
-            case 9 -> m.setStatus(aenderung);
-            case 10 -> m.setAbteilung(aenderung);
+
+        String feld = Mitarbeiter.SPALTEN_TABELLE[index];
+        try{
+            speicher.aendern(m, feld, aenderung);
+            switch(index){
+                case 1 -> m.setNachname(aenderung);
+                case 2 -> m.setVorname(aenderung);
+                case 3 -> m.setAdresse(aenderung);
+                case 4 -> m.setHausnummer(aenderung);
+                case 5 -> m.setPlz(aenderung);
+                case 6 -> m.setWohnort(aenderung);
+                case 7 -> m.setTelefon(aenderung);
+                case 8 -> m.setGeburtsdatum(aenderung);
+                case 9 -> m.setStatus(aenderung);
+                case 10 -> m.setAbteilung(aenderung);
+            }
+            return true;
+        } catch (SQLException e){
+            System.out.println("SQLException Error occurred: " + e.getMessage());
+            return false;
         }
-        speichern();
-        return true;
     }
 }

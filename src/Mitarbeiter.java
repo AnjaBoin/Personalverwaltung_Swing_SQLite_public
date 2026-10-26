@@ -13,6 +13,10 @@ public class Mitarbeiter {
     // Felder fÜr Drop Down Menü
     public static final String [] FELDER_DDMENUE= {"Nachname", "Vorname", "Adresse", "Hausnummer", "Plz", "Wohnort",
             "Telefon", "Geburtsdatum", "Status", "Abteilung"};
+    // Felder für SQL INSERT
+    public static final String[] FELDER_SQL = {"Nachname", "Vorname", "Adresse", "Hausnummer", "Plz", "Wohnort", "Telefon", "Geburtsdatum", "Status", "Abteilung"};
+    public static final String SPALTEN_SQL = ("Id, Nachname, Vorname, Adresse, Hausnummer, Plz, Wohnort, Telefon, Geburtsdatum, Status, Abteilung");
+
     // index fuer bestimmte Spalten bekommen
     public static final int STATUS    = spaltenIndex("Status");
     public static final int ABTEILUNG = spaltenIndex("Abteilung");   // falls du ihn spaeter brauchst
