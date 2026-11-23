@@ -9,31 +9,30 @@ public class Abteilung {
     };
 
     // Konstruktor
-    public Abteilung(){
+    public Abteilung() {
         this.abteilung = abteilung;
     }
 
     // Getter
-    public static String[] getAbteilungen(){
+    public static String[] getAbteilungen() {
         return ABTEILUNGEN;
     }
 
     // Setter
-    public void setAbteilungen(String newAbteilung){
+    public void setAbteilungen(String newAbteilung) {
         abteilung = newAbteilung;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Abteilung ist: " + abteilung;
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
 
-
-        for (String abt : ABTEILUNGEN){
+        for (String abt : ABTEILUNGEN) {
             System.out.println(abt);
         }
     }

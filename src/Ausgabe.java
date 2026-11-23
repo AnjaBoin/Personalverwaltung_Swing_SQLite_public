@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 public class Ausgabe {
     // KONSTANTEN
-    String []options = Mitarbeiter.SPALTEN_TABELLE;
+    String[] options = Mitarbeiter.SPALTEN_TABELLE;
     String text;
 
     // FELDER
@@ -33,7 +33,12 @@ public class Ausgabe {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
                 Component c = super.prepareRenderer(renderer, row, col);
                 boolean anwesend = (Boolean) getModel().getValueAt(row, Mitarbeiter.STATUS);
-                c.setBackground(anwesend ? new Color(200, 255, 200) : new Color(255, 210, 210));
+                if (isRowSelected(row)) {
+                    c.setBackground(anwesend ? new Color(150, 220, 150) : new Color(230, 160, 160));
+                } else {
+                    c.setBackground(anwesend ? new Color(200, 255, 200) : new Color(255, 210, 210));
+
+                }
                 c.setForeground(Color.BLACK);
                 return c;
             }
@@ -41,6 +46,7 @@ public class Ausgabe {
         table.setFont(new Font("SansSerif", Font.PLAIN, 16));
         table.setRowHeight(24);
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Titel im Fenster
         JLabel titel = new JLabel("Personalverwaltung", SwingConstants.CENTER);
@@ -72,10 +78,10 @@ public class Ausgabe {
         // Dieser Satz immer als Abschluss sonst ist nichts sichtbar
         frame.setVisible(true);   // immer als Letztes
 
-        }
+    }
 
 
-    public void showButton () {
+    public void showButton() {
         //resources folder should be inside SWING folder.
         JButton neuButton = new JButton("Neuer Mitarbeiter anmelden");
         neuButton.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -97,13 +103,13 @@ public class Ausgabe {
         });
         aendernButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Eingabe.mitarbeiterAendern(options, verwaltung, frame);
+                Eingabe.mitarbeiterAendern(options, verwaltung, frame, ausgewaehlteId());
                 model.fireTableDataChanged();
             }
         });
         loeschButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Eingabe.mitarbeiterEntfernen(verwaltung, frame);
+                Eingabe.mitarbeiterEntfernen(verwaltung, frame, ausgewaehlteId());
                 model.fireTableDataChanged();
             }
         });
@@ -118,4 +124,10 @@ public class Ausgabe {
         controlPanel.add(cancelButton);
     }
 
+    public String ausgewaehlteId() {
+        int row = table.getSelectedRow();
+        if (row == -1) return null;
+        return verwaltung.getMitarbeiterListe().get(row).getId();
     }
+
+}

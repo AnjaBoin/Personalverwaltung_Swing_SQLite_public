@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  Speicher {
+public class Speicher {
     // hier wird das Laden und Speichern von Mitarbeitern geregelt
 
     // KONSTANTEN
@@ -11,14 +11,14 @@ public class  Speicher {
     private static final String DATENBANK = "personalverwaltung";
     private static final String DATEI_PFAD = "jdbc:sqlite:Daten/personalverwaltung.db";
     private static final String SQL_INSERT = "INSERT INTO " + DATENBANK +
-            "(" + String.join(", ", Mitarbeiter.FELDER_SQL) + ") VALUES (" + "?, ".repeat(Mitarbeiter.FELDER_SQL.length-1) + "?" + ")";
+            "(" + String.join(", ", Mitarbeiter.FELDER_SQL) + ") VALUES (" + "?, ".repeat(Mitarbeiter.FELDER_SQL.length - 1) + "?" + ")";
     private static final String SQL_DELETE = "DELETE FROM " + DATENBANK + " WHERE id = ?";
     private static final String SQL_QUERY = "SELECT * FROM " + DATENBANK;
 
     // Konstruktor
     public Speicher() {
         try (Connection conn = verbinden();
-             Statement stmt = conn.createStatement()){
+             Statement stmt = conn.createStatement()) {
             stmt.execute(createTable());
         } catch (SQLException e) {
             System.out.println("Fehler: " + e.getMessage());
@@ -40,7 +40,7 @@ public class  Speicher {
             createTable.append(" TEXT");
         }
         createTable.append(")");
-    return createTable.toString();
+        return createTable.toString();
     }
 
     // neuer Mitarbeiter einfügen
@@ -87,16 +87,15 @@ public class  Speicher {
     }
 
     // SQL Datenbank in einer ArrayList umsetzen
-    public List<Mitarbeiter> laden() throws SQLException{
+    public List<Mitarbeiter> laden() throws SQLException {
         List<Mitarbeiter> liste = new ArrayList<>();
         try (Connection conn = verbinden();
              PreparedStatement pstmt = conn.prepareStatement(SQL_QUERY);
              ResultSet res = pstmt.executeQuery()
-             )
-        {
-            while(res.next()) {
-                String [] werte = new String [Mitarbeiter.SPALTEN_TABELLE.length];
-                for (int i = 0; i < Mitarbeiter.SPALTEN_TABELLE.length; i ++) {
+        ) {
+            while (res.next()) {
+                String[] werte = new String[Mitarbeiter.SPALTEN_TABELLE.length];
+                for (int i = 0; i < Mitarbeiter.SPALTEN_TABELLE.length; i++) {
                     werte[i] = res.getString(i + 1);
                 }
                 liste.add(Mitarbeiter.ausZeile(werte));
@@ -105,7 +104,7 @@ public class  Speicher {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
 
     }

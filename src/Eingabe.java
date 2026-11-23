@@ -69,16 +69,13 @@ public class Eingabe {
     }
 
     // Mitarbeiter ändern
-    public static void mitarbeiterAendern(String[]options, Verwaltung verwaltung, JFrame frame){
+    public static void mitarbeiterAendern(String[]options, Verwaltung verwaltung, JFrame frame, String rowId){
         // erste Abfrage nach ID
-        String text;
-        text = "Welcher Mitarbeiter möchten Sie ändern? ID angeben bitte:";
-        String id = JOptionPane.showInputDialog(frame, text);
-        if (id == null) return;
-        if (verwaltung.searchMitarbeiter(id) == null) {
-            JOptionPane.showMessageDialog(frame, "Die ID " + id + " wurde nicht gefunden.");
+        String id = ersteAbfrageNachID(verwaltung, frame, rowId);
+        if (id == null) {
             return;
         }
+        String text;
 
         // zweite Abfrage nach Datenfeld
         text = "Welche Daten möchten Sie ändern?";
@@ -103,9 +100,13 @@ public class Eingabe {
         if (index == -1) return;
         String aendern;
         text = "Geben Sie den neuen Wert ein für " + indexText + ":";
-        if (indexText.equals("Status")) aendern = Eingabe.statusAbfragen(frame);
-        else if (indexText.equals("Abteilung")) aendern = Eingabe.abteilungAbfragen("Welche Abteilung?", Abteilung.getAbteilungen(), frame);
-        else aendern = JOptionPane.showInputDialog(frame, text);
+        if (indexText.equals("Status")) {
+            aendern = Eingabe.statusAbfragen(frame);
+        } else if (indexText.equals("Abteilung")) {
+            aendern = Eingabe.abteilungAbfragen("Welche Abteilung?", Abteilung.getAbteilungen(), frame);
+        } else {
+            aendern = JOptionPane.showInputDialog(frame, text);
+        }
         if (aendern == null) return;
 
         // Änderung durchführen (oder nicht)
@@ -117,9 +118,21 @@ public class Eingabe {
         JOptionPane.showMessageDialog(frame, text);
     }
 
-    public static void mitarbeiterEntfernen(Verwaltung verwaltung, JFrame frame){
+    private static String ersteAbfrageNachID(Verwaltung verwaltung, JFrame frame, String rowId) {
+        String text;
+        text = "Welcher Mitarbeiter möchten Sie ändern? ID angeben bitte:";
+        String id = JOptionPane.showInputDialog(frame, text, rowId);
+        if (id == null) return null;
+        if (verwaltung.searchMitarbeiter(id) == null) {
+            JOptionPane.showMessageDialog(frame, "Die ID " + id + " wurde nicht gefunden.");
+            return null;
+        }
+        return id;
+    }
+
+    public static void mitarbeiterEntfernen(Verwaltung verwaltung, JFrame frame, String rowId){
         String text = "Welchen Mitarbeiter möchten Sie entfernen? ID angeben bitte:";
-        String entfernen = JOptionPane.showInputDialog(frame, text);
+        String entfernen = JOptionPane.showInputDialog(frame, text, rowId);
         if (entfernen == null) return;
         Mitarbeiter m = verwaltung.searchMitarbeiter(entfernen);
         if (m == null) {

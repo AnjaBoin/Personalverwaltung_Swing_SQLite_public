@@ -31,7 +31,7 @@ public class MitarbeiterTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Class <?> getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         if (col == Mitarbeiter.STATUS) return Boolean.class;
         return String.class;
     }
@@ -59,8 +59,6 @@ public class MitarbeiterTableModel extends AbstractTableModel {
     public boolean isCellEditable(int row, int col) {
         return col == Mitarbeiter.STATUS;
     }
-
-
 
 
 }

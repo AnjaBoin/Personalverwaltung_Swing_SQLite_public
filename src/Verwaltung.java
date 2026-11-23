@@ -11,7 +11,7 @@ public class Verwaltung {
     private Speicher speicher = new Speicher();
 
     // Konstruktor
-    public Verwaltung(){
+    public Verwaltung() {
         laden();
     }
 
@@ -21,27 +21,27 @@ public class Verwaltung {
     }
 
     // mitarbeiterListe laden aus Speicher
-    public void laden(){
-        try{
+    public void laden() {
+        try {
             mitarbeiterListe.clear();
             mitarbeiterListe.addAll(speicher.laden());
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("SQLException Error occurred: " + e.getMessage());
         }
     }
 
     // mitarbeiterListe drucken
-    public void drucken(){
+    public void drucken() {
         System.out.println(String.format(Mitarbeiter.FORMAT,
-                (Object[])Mitarbeiter.SPALTEN_DRUCKEN));
-        for (Mitarbeiter m: mitarbeiterListe){
+                (Object[]) Mitarbeiter.SPALTEN_DRUCKEN));
+        for (Mitarbeiter m : mitarbeiterListe) {
             System.out.println(m);
         }
         System.out.println("-".repeat(140));
     }
 
     // neuer ID generieren
-    public int getMaxId () {
+    public int getMaxId() {
         int maxId = 0;
         List<Mitarbeiter> liste = getMitarbeiterListe();
         for (Mitarbeiter m : liste) {
@@ -52,12 +52,12 @@ public class Verwaltung {
 
 
     // Mitarbeiter hinzufügen
-    public boolean addMitarbeiter(Mitarbeiter mitarbeiter){
-        try{
+    public boolean addMitarbeiter(Mitarbeiter mitarbeiter) {
+        try {
             speicher.einfuegen(mitarbeiter);
             laden();
             return true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("SQLException Error occurred: " + e.getMessage());
             return false;
         }
@@ -80,17 +80,17 @@ public class Verwaltung {
     }
 
     // Mitarbeiter entfernen
-    public boolean deleteMitarbeiter(String id){
+    public boolean deleteMitarbeiter(String id) {
         Mitarbeiter mitarbeiter = searchMitarbeiter(id);
         if (mitarbeiter == null) {
             return false;
         }
 
-        try{
+        try {
             speicher.loeschen(mitarbeiter);
             mitarbeiterListe.remove(mitarbeiter);
             return true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("SQLException Error occurred: " + e.getMessage());
             return false;
         }
@@ -99,14 +99,14 @@ public class Verwaltung {
     }
 
     // Mitarbeiterdaten anpassen
-    public boolean changeMitarbeiter(String id, int index, String aenderung){
+    public boolean changeMitarbeiter(String id, int index, String aenderung) {
         Mitarbeiter m = searchMitarbeiter(id);
-        if(m == null) return false;
+        if (m == null) return false;
 
         String feld = Mitarbeiter.SPALTEN_TABELLE[index];
-        try{
+        try {
             speicher.aendern(m, feld, aenderung);
-            switch(index){
+            switch (index) {
                 case 1 -> m.setNachname(aenderung);
                 case 2 -> m.setVorname(aenderung);
                 case 3 -> m.setAdresse(aenderung);
@@ -119,7 +119,7 @@ public class Verwaltung {
                 case 10 -> m.setAbteilung(aenderung);
             }
             return true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("SQLException Error occurred: " + e.getMessage());
             return false;
         }

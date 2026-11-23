@@ -55,72 +55,30 @@ public class Mitarbeiter {
     }
 
     // GETTERS
-    public String getId(){
-        return id;
-    }
-    public String getNachname(){
-        return nachname;
-    }
-    public String getVorname(){
-        return vorname;
-    }
-    public String getAdresse(){
-        return adresse;
-    }
-    public String getHausnummer(){
-        return hausnummer;
-    }
-    public String getPlz(){return plz;}
-    public String getWohnort(){
-        return wohnort;
-    }
-    public String getTelefon(){
-        return telefon;
-    }
-    public String getGeburtsdatum(){
-        return geburtsdatum;
-    }
-    public String getStatus(){
-        return status;
-    }
-    public String getAbteilung(){
-        return abteilung;
-    }
+    public String getId(){ return id;}
+    public String getNachname(){ return nachname;}
+    public String getVorname(){ return vorname;}
+    public String getAdresse(){ return adresse;}
+    public String getHausnummer(){ return hausnummer; }
+    public String getPlz(){return plz; }
+    public String getWohnort(){ return wohnort;}
+    public String getTelefon(){ return telefon;}
+    public String getGeburtsdatum(){ return geburtsdatum;}
+    public String getStatus(){ return status;}
+    public String getAbteilung(){ return abteilung;}
 
     // SETTERS
-    public void setId(String newId){
-        id = newId;
-    }
-    public void setNachname(String newNachname){
-        nachname = newNachname;
-    }
-    public void setVorname(String newVorname){
-        vorname = newVorname;
-    }
-    public void setAdresse(String newAdresse){
-        adresse = newAdresse;
-    }
-    public void setHausnummer(String newHausnummer){
-        hausnummer = newHausnummer;
-    }
-    public void setPlz(String newPlz){
-        plz = newPlz;
-    }
-    public void setWohnort(String newWohnort){
-        wohnort = newWohnort;
-    }
-    public void setTelefon(String newTelefon){
-        telefon = newTelefon;
-    }
-    public void setGeburtsdatum(String newGeburtsdatum){
-        geburtsdatum = newGeburtsdatum;
-    }
-    public void setStatus(String newStatus){
-        status = newStatus;
-    }
-    public void setAbteilung(String newAbteilung){
-        abteilung = newAbteilung;
-    }
+    public void setId(String newId){ id = newId;}
+    public void setNachname(String newNachname){ nachname = newNachname;}
+    public void setVorname(String newVorname){ vorname = newVorname;}
+    public void setAdresse(String newAdresse){ adresse = newAdresse;}
+    public void setHausnummer(String newHausnummer){ hausnummer = newHausnummer;}
+    public void setPlz(String newPlz){ plz = newPlz;}
+    public void setWohnort(String newWohnort){ wohnort = newWohnort;}
+    public void setTelefon(String newTelefon){ telefon = newTelefon;}
+    public void setGeburtsdatum(String newGeburtsdatum){ geburtsdatum = newGeburtsdatum;}
+    public void setStatus(String newStatus){ status = newStatus;}
+    public void setAbteilung(String newAbteilung){ abteilung = newAbteilung;}
 
     // AUSGABE ANPASSEN
     @Override
